@@ -1,0 +1,13 @@
+﻿  GameObject.cpp
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(13,37): error C2039: 'size': 'Position'의 멤버가 아닙니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\Utils.h(8): message : 'Position' 선언을 참조하십시오.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(13,1): error C3078: 배열 크기는 새 식에서 이니셜라이저 없이 지정되어야 합니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(15,19): error C2039: 'size': 'Position'의 멤버가 아닙니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\Utils.h(8): message : 'Position' 선언을 참조하십시오.
+  Main.cpp
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(13,37): error C2039: 'size': 'Position'의 멤버가 아닙니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\Utils.h(8): message : 'Position' 선언을 참조하십시오.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(13,1): error C3078: 배열 크기는 새 식에서 이니셜라이저 없이 지정되어야 합니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\GameObject.h(15,19): error C2039: 'size': 'Position'의 멤버가 아닙니다.
+C:\Users\user\Desktop\OOP2-Game-Project\OOP2-Game-Project\Utils.h(8): message : 'Position' 선언을 참조하십시오.
+  코드를 생성하고 있습니다...
