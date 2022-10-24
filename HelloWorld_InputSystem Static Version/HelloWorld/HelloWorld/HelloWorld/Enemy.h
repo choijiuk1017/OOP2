@@ -16,24 +16,31 @@ class Enemy :
     void processInput()
     {
         auto pos = getPos();
-        if (InputSystem::GetKey(224, 'K')) { // left arrow
+        if (input.getKeyDown(VK_LEFT)) { // left arrow
             pos.x--;
         }
-        else if (InputSystem::GetKey(224, 'M')) { // right arrow
+        else if (input.getKeyDown(VK_RIGHT)) { // right arrow
             pos.x++;
         }
-        else if (InputSystem::GetKey(224, 'H')) { // up arrow
+        else if (input.getKeyDown(VK_UP)) { // up arrow
             pos.y--;
         }
-        else if (InputSystem::GetKey(224, 'P')) { // down arrow
+        else if (input.getKeyDown(VK_DOWN)) { // down arrow
             pos.y++;
         }
         setPos(pos);
+
+        if (input.getMouseButtonDown(0))
+        {
+            auto mousePos = input.getMousePosition();
+            Borland::GotoXY(0, 28);
+            printf("mouse position[%d, %d]\n", mousePos.x, mousePos.y);
+        }
     }
 
 public:
-    Enemy(int x, int y, Screen& screen) 
-        : GameObject('*', x, y, screen) 
+    Enemy(int x, int y, Screen& screen, InputSystem& input)
+        : GameObject('*', x, y, screen, input) 
     {}
 
     void update() override {

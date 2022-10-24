@@ -9,16 +9,16 @@ class Player :
 	auto processInput()
 	{
 		auto pos = getPos();
-		if (InputSystem::GetKey('w')) {
+		if (input.getKey(0x57)) {
 			pos.y--;
 		}
-		else if (InputSystem::GetKey('a')) {
+		else if (input.getKey(0x41)) {
 			pos.x--;
 		}
-		else if (InputSystem::GetKey('s')) {
+		else if (input.getKey(0x53)) {
 			pos.y++;
 		}
-		else if (InputSystem::GetKey('d')) {
+		else if (input.getKey(0x57)) {
 			pos.x++;
 		}
 
@@ -27,8 +27,8 @@ class Player :
 	}
 
 public:
-    Player(int x, int y, Screen& screen) 
-		: GameObject('>', x, y, screen) 
+    Player(int x, int y, Screen& screen, InputSystem& input)
+		: GameObject('>', x, y, screen, input) 
 	{}
 
 

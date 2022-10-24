@@ -13,11 +13,14 @@ class GameObject
 	Position pos;
 	char* shape;
 	Dimension dim;
+
+protected:
 	Screen& screen;
+	InputSystem input;
 
 public:
-	GameObject(char shape, int x, int y, Screen& screen)
-		: pos(x, y), shape(nullptr), dim(1, 1), screen(screen)
+	GameObject(char shape, int x, int y, Screen& screen, InputSystem& input)
+		: pos(x, y), shape(nullptr), dim(1, 1), screen(screen), input(input)
 	{
 		this->shape = (char*)new char[dim.size() + 1];
 		this->shape[0] = shape;
