@@ -88,8 +88,8 @@ public:
 	//Table을 그려주는 함수, 확인용
 	void renderTable()
 	{
-		cout << endl;
-		cout << "table 확인" << endl;
+		Borland::GotoXY(0, 15);
+
  		printf("%s", table);
 	}
 
@@ -108,29 +108,28 @@ public:
 	//0일때 주변을 탐색하는 함수
 	void checkAround(int x, int y)
 	{
-		int offset = pos2offset(x, y, n_cols);
-
+		checkTop(x, y);
+		checkBottom(x, y);
 		checkLeft(x, y);
 		checkRight(x, y);
-		checkBottom(x, y);
+	}
 
+	void checkTop(int x, int y)
+	{
+		int offset = pos2offset(x, y, n_cols);
 		//왼쪽 위 탐사
 		if (table[offset - 12] != '\n' && table[offset - 12] != '\0')
 		{
 			if (table[offset - 12] == '0')
 			{
 				lines[offset - 12] = table[offset - 12];
-				checkAround(x - 1, y + 1);
+				checkTop(x - 1, y + 1);
 			}
 			else if (table[offset - 12] >= '1')
 			{
 				lines[offset - 12] = table[offset - 12];
-				return;
 			}
-			else
-			{
-				return;
-			}
+
 		}
 
 		//위 탐사
@@ -139,17 +138,13 @@ public:
 			if (table[offset - 11] == '0')
 			{
 				lines[offset - 11] = table[offset - 11];
-				checkAround(x, y + 1);
+				checkTop(x, y + 1);
 			}
 			else if (table[offset - 11] >= '1')
 			{
 				lines[offset - 11] = table[offset - 11];
-				return;
 			}
-			else
-			{
-				return;
-			}
+
 		}
 
 
@@ -159,21 +154,17 @@ public:
 			if (table[offset - 10] == '0')
 			{
 				lines[offset - 10] = table[offset - 10];
-				checkAround(x + 1, y + 1);
+				checkTop(x + 1, y + 1);
 			}
 			else if (table[offset - 10] >= '1')
 			{
 				lines[offset - 10] = table[offset - 10];
-				return;
-			}
-			else
-			{
-				return;
 			}
 		}
+
+		checkLeft(x, y);
+		checkRight(x, y);
 	}
-
-
 	//아래쪽 탐사
 	void checkBottom(int x, int y)
 	{
@@ -191,11 +182,6 @@ public:
 			else if (table[offset + 10] >= '1')
 			{
 				lines[offset + 10] = table[offset + 10];
-				return;
-			}
-			else
-			{
-				return;
 			}
 		}
 
@@ -211,11 +197,6 @@ public:
 			else if (table[offset + 11] >= '1')
 			{
 				lines[offset + 11] = table[offset + 11];
-				return;
-			}
-			else
-			{
-				return;
 			}
 		}
 
@@ -232,14 +213,11 @@ public:
 			else if (table[offset + 12] >= '1')
 			{
 				lines[offset + 12] = table[offset + 12];
-				return;
-			}
-			else
-			{
-				return;
 			}
 		}
 
+		checkLeft(x, y);
+		checkRight(x, y);
 	}
 
 	//왼쪽 탐사
@@ -259,12 +237,8 @@ public:
 			else if (table[offset - 1] >= '1')
 			{
 				lines[offset - 1] = table[offset - 1];
-				return;
 			}
-			else
-			{
-				return;
-			}
+
 		}
 	}
 
@@ -283,11 +257,6 @@ public:
 			else if (table[offset + 1] >= '1')
 			{
 				lines[offset + 1] = table[offset + 1];
-				return;
-			}
-			else
-			{
-				return;
 			}
 		}
 
@@ -370,6 +339,12 @@ public:
 				table[i] = '*';
 			}
 		}
+	}
+
+	auto checkValidPos(const Position& pos) const
+	{
+		return (pos.x >= 0 && pos.x < n_cols-1 
+			&& pos.y >= 0 && pos.y < n_rows );
 	}
 };
 

@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include "Utils.h"
+#include "Screen.h"
+#include "InputSystem.h"
 
 using namespace std;
 
@@ -10,9 +12,15 @@ class GameObject
 	Position pos;
 	char* shape;
 	Dimension dim;
+
+protected:
+	Screen& screen;
+	InputSystem& input;
+
 public:
-	GameObject(char shape, int x, int y)
-		: pos(x, y), shape(nullptr), dim(1, 1)
+	GameObject(char shape, int x, int y, Screen& screen, InputSystem & input)
+		: pos(x, y), shape(nullptr), dim(1, 1), screen(screen), input(input)
+		
 	{
 		this->shape = (char*)new char[dim.size() + 1];
 		this->shape[0] = shape;
@@ -23,13 +31,22 @@ public:
 		delete[] shape;
 	}
 
-	Position getPos() const { return pos; }
+	auto getPos() const { return pos; }
 
-	void setPos(const Position& pos) { this->pos.x = pos.x; this->pos.y = pos.y; }
+	void setPos(const Position& pos) 
+	{
+		if (screen.checkValidPos(pos) == false)
+			return;
+		this->pos.x = pos.x; this->pos.y = pos.y; 
+	}
 
-	char getShape() const { return shape[0]; }
+	auto getShape() const { return shape[0]; }
 
+	virtual void draw()
+	{
+		screen.drawScreen(pos, shape[0]);
+	}
 
-	
+	virtual void update(int mineNum) {}
 };
 

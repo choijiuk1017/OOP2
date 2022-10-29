@@ -11,7 +11,12 @@ struct Position {
 
 	Position(int x, int y) : x(x), y(y) {}
 
-	int size() const { return x * y; }
+	size_t size() const { return x * y; }
+
+	auto operator+(const Position& other)
+	{
+		return Position{ this->x + other.x, this->y + other.y };
+	}
 };
 
 typedef Position Dimension;
