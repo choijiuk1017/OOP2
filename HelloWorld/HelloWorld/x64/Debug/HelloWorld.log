@@ -1,11 +1,2 @@
 ﻿  main.cpp
-C:\Users\B409_30\Downloads\OOP2-In_Class\OOP2-In_Class\HelloWorld\HelloWorld\main.cpp(55,14): error C2676: 이항 '%': 'const T'이(가) 이 연산자를 정의하지 않거나 미리 정의된 연산자에 허용되는 형식으로의 변환을 정의하지 않습니다.
-          with
-          [
-              T=Student
-          ]
-C:\Users\B409_30\Downloads\OOP2-In_Class\OOP2-In_Class\HelloWorld\HelloWorld\main.cpp(136): message : 컴파일되는 함수 템플릿 인스턴스화 'int isMultipleOfFive<Student>(const T &)'에 대한 참조를 확인하세요.
-          with
-          [
-              T=Student
-          ]
+  HelloWorld.vcxproj -> C:\Users\B409_30\Downloads\OOP2-In_Class\OOP2-In_Class\HelloWorld\x64\Debug\HelloWorld.exe

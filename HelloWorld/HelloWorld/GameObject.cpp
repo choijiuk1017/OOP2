@@ -32,6 +32,18 @@ void GameObject::Update()
 
 void GameObject::DestoryDisabledObjects()
 {
+	objs.erase(remove_if(objs.begin(), objs.end(),
+		[](auto& obj)
+		{
+			if (!obj->isEnabled())
+			{
+				delete obj;
+				return true;
+			}
+			return false;
+
+	}), objs.end());
+	
 	for (auto it = objs.begin(); it != objs.end();) {
 		auto obj = *it;
 		if (obj->isEnabled()) {

@@ -11,6 +11,18 @@
 #include "Enemy.h"
 
 using namespace std;
+template <typename T>
+bool isMultipleOfFive(const T& s)
+{
+	return s.age % 5 = 0;
+}
+
+template <typename T>
+bool isMultipleOfThree(const T& s)
+{
+	return s.age % 3 = 0;
+}
+
 
 class Student
 {
@@ -18,18 +30,40 @@ class Student
 	int age;
 
 public:
-	Student(const string& name, int age) : name(name), age(age) {}
+	Student(const string& name, int age) : name(name), age(age)
+	{
+		cout << "Student copy constructor" << endl;
 
-	//전역 함수임, 멤버 함수 아님
+	}
+
+
+	Student(const Student& other) : name(other.name), age(other.age)
+	{
+		cout << "Student copy constructor" << endl;
+
+	};
+
+	~Student()
+	{
+		cout << "Student destructer" << endl;
+	}
+	//전역 함수임, 멤버 함수 아님0
 	//전역 함수의 내용을 클래스 안에 구현해 놓은 것
 	friend ostream& operator << (ostream& os, const Student& s);
 	/*{
 		os << "name =" << s.name << ", age = " << s.age << endl;
 		return os;
 	}*/
-	friend template<typename T>
-	friend bool isMultipleOfFive<Student>(const Student& s);
+
+	bool isMultipleOfThree()
+	{
+		return this->age % 3 == 0;
+	}
+
+	static bool isMultipleOfThree(const Student& student) { return student.age % 3 == 0; }
+
 };
+
 
 ostream& operator << (ostream& os, const Student& s)
 {
@@ -51,104 +85,56 @@ ostream & operator << (ostream & os, const vector<T>& container)
 	return os;
 }
 
-template<typename T>
-bool isMultipleOfFive(const T& item)
-{
-	return item % 5 == 0;
-}
-
-template<>
-bool isMultipleOfFive(const Student& item)
-{
-	return item.age % 5 = 0;
-}
-
 int main()
 {
 	//vector<int> ints(10); //10 만큼의 배열 공간 생성, 10 대입 아님
 	// vector 사용 시 배열 공간의 크기는 유동적으로 변경 가능
-	
-	/*ints.push_back(20);
-	ints.push_back(30);
-	ints.push_back(50);
-	ints.push_back(1);
-	ints.push_back(24);*/
 
-	//vector<int> ints = { 20, 30, 50, 1, 24 };
+	vector<Student> students;
 
-	//vector<int> ints{ 50, 20, 100, 50, 24 };
-	vector<Student> students{ {"Beomjoo Seo", 18} ,{"Mr. Present", 60}, {"Mr. Lee", 62}, {"Mr.Moon", 60} };
-
-	/*
-	for (vector<int>::const_iterator auto it = ints.cbegin(); it != ints.cend(); it++)
-	{
-		//cbegin 읽기 전용, begin 고치기 가능
-		auto item = *it;
-
-		cout << "item = " << item << endl;
-	}
-	*/
+	students.push_back({ "Beomjoo Seo", 18 });
+	students.push_back({ "Bae, Byungcheol", 24 });
+	students.push_back({ "Shin-Jin, Kang", 21 });
+	students.push_back({ "Yejin Kim", 17 });
+	students.push_back({ "Kim HyeYong", 22 });
 
 	cout << students << endl;
-	//print(students.data(), students.size());
-	
-	//for (/*vector<int>::iterator*/ auto it = ints.begin(); it != ints.end(); it++)
-	//{
-	//	//cbegin 읽기 전용, begin 고치기 가능
-	//	auto& item = *it;
-
-	//	item++;
-
-	//	cout << "item = " << item << endl;
-	//}
-
-	////C#의 foreach문과 동일, ranged for문
-	//for (auto item : ints)
-	//{
-	//	item++;
-	//	cout << "item = " << item << endl;
-	//}
-
-	//for (auto item : ints)
-	//{
-	//	cout << "item = " << item << endl;
-	//}
-	////item이 바뀌긴 하나 원본에게 영향을 끼치진 않음
-
-	//for (auto& item : ints)
-	//{
-	//	item++;
-	//	cout << "item = " << item << endl;
-	//}
-
-	//for (auto item : ints)
-	//{
-	//	cout << "item = " << item << endl;
-	//}
-	//item도 바뀌고 원본도 바뀜
-
-	//장점: 깔끔함, 인덱스 오류가 발생할 일 없음
-	//단점: 새로운 배열 추가, 삭제 불가능
 
 	cout << endl << "find" << endl;
 
-	/*vector<int> ::iterator*/ auto pos = students.begin();
+	//erase - remove idiom
+	//객체들 조건에 따라 삭제할 때 사용
+	students.erase(
+		remove_if(students.begin(),
+			students.end(), 
+			[](auto& student)
+			{
+				return student.isMultipleOfThree(); //함수가 자동완성이 왜 안돼 시발 거
 
-	/*while ((pos = find(pos, ints.end(), 50)) != ints.end())
+			}
+		), students.end());
+
+	cout << students << endl;
+
+
+
+	for (auto it = students.begin(); it != students.end();)
 	{
-		cout << *pos << endl;
-		pos++;
-	}*/
+		auto& student = *it;
 
-	while ((pos = find_if(pos, students.end(), isMultipleOfFive<Student>)) != students.end())
-	{
-		//cout << *pos << endl;
-		pos++;
-
+		if (student.isMultipleOfThree())
+		{
+			it = students.erase(it); //erase 를 쓸때는 지우고 재해석 필요
+		}
+		else
+		{
+			it++;
+		}
 	}
 
-	return 0;
+	cout << students << endl;
 
+	return 0;
 
 	Screen screen(30, 81);
 	InputSystem input;
