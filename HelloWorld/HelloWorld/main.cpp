@@ -32,11 +32,12 @@ class Student
 public:
 	Student(const string& name, int age) : name(name), age(age)
 	{
-		cout << "Student copy constructor" << endl;
+		cout << "Student constructor" << endl;
 
 	}
 
-
+	//깊은 복사 
+	//move semantic 참고
 	Student(const Student& other) : name(other.name), age(other.age)
 	{
 		cout << "Student copy constructor" << endl;
@@ -47,6 +48,25 @@ public:
 	{
 		cout << "Student destructer" << endl;
 	}
+
+	//전형저긴 getter 함수
+	string getName() const //복사본을 전달, 원본 정보 절대로 보내지 말 것
+	{
+		return name;
+	}
+	//레퍼런스 변수를 리턴 값으로 설정하지 말 것
+
+	bool equalName(const string& name) const
+	{
+		return this->name == name;
+	}
+
+	int getAge() const
+	{
+		return age;
+	}
+
+
 	//전역 함수임, 멤버 함수 아님0
 	//전역 함수의 내용을 클래스 안에 구현해 놓은 것
 	friend ostream& operator << (ostream& os, const Student& s);
@@ -92,45 +112,50 @@ int main()
 
 	vector<Student> students;
 
-	students.push_back({ "Beomjoo Seo", 18 });
+	Student student{ "Kim Cheol Soo", 39 };
+
+	students.push_back(move(student)); //move semantic(성능 개선)
+
+	students.push_back(move(Student{ "Beomjoo Seo", 18 })); 
 	students.push_back({ "Bae, Byungcheol", 24 });
 	students.push_back({ "Shin-Jin, Kang", 21 });
 	students.push_back({ "Yejin Kim", 17 });
-	students.push_back({ "Kim HyeYong", 22 });
+	students.push_back({ "Kim HyeYoung", 22 });
 
 	cout << students << endl;
 
 	cout << endl << "find" << endl;
 
-	//erase - remove idiom
-	//객체들 조건에 따라 삭제할 때 사용
+	//원하는 객체 지우기
+	//1. find -> erase
+	/*
+	auto pos = find_if(students.begin(), students.end(), 
+		[](Student& student) {return student.getName() == "Kim HyeYoung"; }
+	);
+	if (pos != students.end()) 
+	{
+		students.erase(pos);
+	}
+	
+	cout << students << endl;
+	*/
+	//2. erase - remove idiom
+	/*
 	students.erase(
-		remove_if(students.begin(),
-			students.end(), 
+		remove_if(
+			students.begin(),
+			students.end(),
 			[](auto& student)
-			{
-				return student.isMultipleOfThree(); //함수가 자동완성이 왜 안돼 시발 거
-
-			}
-		), students.end());
+			{ return student.equalName("Bae, Byungcheol"); }
+		),
+		students.end()
+	);
 
 	cout << students << endl;
+	*/
 
-
-
-	for (auto it = students.begin(); it != students.end();)
-	{
-		auto& student = *it;
-
-		if (student.isMultipleOfThree())
-		{
-			it = students.erase(it); //erase 를 쓸때는 지우고 재해석 필요
-		}
-		else
-		{
-			it++;
-		}
-	}
+	sort(students.begin(), students.end(),
+		[](auto& a, auto b){return a.getName() > b.getName(); });
 
 	cout << students << endl;
 
