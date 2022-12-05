@@ -8,7 +8,11 @@ using namespace std;
 
 Player::Player(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, Dimension dim)
 	: GameObject(shape, pos, screen, input, dim), target(nullptr), targetPos(Position<float>::InvalidPosition)
-{}
+{
+	cout << "player constructor[" << this << "]:" << pos << endl;
+}
+
+
 
 GameObject* Player::findNearestTarget()
 {

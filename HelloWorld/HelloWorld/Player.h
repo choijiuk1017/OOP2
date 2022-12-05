@@ -39,7 +39,10 @@ class Player :
 
 public:
 	Player(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, Dimension dim = { 1,1 });
-
+	Player(const Player& other) : Player(other.getShape(), other.getPos(), other.screen, other.input, other.getDimension())
+	{
+		cout << "player copy constructor[" << this << "]:" << getPos() << endl;
+	}
 	void update() override;
 
 	void draw() override

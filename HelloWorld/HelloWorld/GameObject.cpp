@@ -8,16 +8,18 @@
 
 using namespace std;
 
+//정의는 헤더 파일에 하면 안됨
+//무조건 소스 파일에 정의
 vector<GameObject *> GameObject::objs;
 vector<GameObject*> GameObject::pendingObjs;
 
 
 void GameObject::Initialize(Screen& screen, InputSystem& input)
 {
-	new Enemy("\xB0\xB0", { 10, 5 }, screen, input, { 2, 1 });
-	new Enemy("\xB0\xB0", { 5, 7 }, screen, input, { 2, 1 });
-	new Enemy("\xB0\xB0", { 60, 18 }, screen, input, { 2, 1 });
-	new Player("\xB2\xB2\xB2\xB2 \xB2\xB2 \xB2", { 40, 10 }, screen, input, { 3, 3 });
+	pendingObjs.push_back(new Enemy("\xB0\xB0", { 10, 5 }, screen, input, { 2, 1 }));
+	pendingObjs.push_back(new Enemy("\xB0\xB0", { 5, 7 }, screen, input, { 2, 1 }));
+	pendingObjs.push_back(new Enemy("\xB0\xB0", { 60, 18 }, screen, input, { 2, 1 }));
+	pendingObjs.push_back(new Player("\xB2\xB2\xB2\xB2 \xB2\xB2 \xB2", { 40, 10 }, screen, input, { 3, 3 }));
 }
 
 void GameObject::Update()
@@ -33,17 +35,16 @@ void GameObject::Update()
 void GameObject::DestoryDisabledObjects()
 {
 	objs.erase(remove_if(objs.begin(), objs.end(),
-		[](auto& obj)
-		{
+		[](auto& obj) {
 			if (!obj->isEnabled())
 			{
-				delete obj;
-				return true;
+				return
 			}
-			return false;
+		}
+		),
+		objs.end()
+			);
 
-	}), objs.end());
-	
 	for (auto it = objs.begin(); it != objs.end();) {
 		auto obj = *it;
 		if (obj->isEnabled()) {

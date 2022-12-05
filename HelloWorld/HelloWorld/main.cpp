@@ -93,9 +93,9 @@ ostream& operator << (ostream& os, const Student& s)
 
 
 template<typename T>
-ostream & operator << (ostream & os, const vector<T>& container)
+ostream& operator << (ostream& os, const vector<T>& container)
 {
-	for (auto &item : container)
+	for (auto& item : container)
 	{
 		//data[i].print();
 		cout << item << endl;
@@ -107,79 +107,94 @@ ostream & operator << (ostream & os, const vector<T>& container)
 
 int main()
 {
-	//vector<int> ints(10); //10 만큼의 배열 공간 생성, 10 대입 아님
-	// vector 사용 시 배열 공간의 크기는 유동적으로 변경 가능
+	////vector<int> ints(10); //10 만큼의 배열 공간 생성, 10 대입 아님
+	//// vector 사용 시 배열 공간의 크기는 유동적으로 변경 가능
 
-	vector<Student> students;
+	//vector<Student> students;
 
-	Student student{ "Kim Cheol Soo", 39 };
+	//Student student{ "Kim Cheol Soo", 39 };
 
-	students.push_back(move(student)); //move semantic(성능 개선)
+	//students.push_back(move(student)); //move semantic(성능 개선)
 
-	students.push_back(move(Student{ "Beomjoo Seo", 18 })); 
-	students.push_back({ "Bae, Byungcheol", 24 });
-	students.push_back({ "Shin-Jin, Kang", 21 });
-	students.push_back({ "Yejin Kim", 17 });
-	students.push_back({ "Kim HyeYoung", 22 });
+	//students.push_back(move(Student{ "Beomjoo Seo", 18 }));
+	//students.push_back({ "Bae, Byungcheol", 24 });
+	//students.push_back({ "Shin-Jin, Kang", 21 });
+	//students.push_back({ "Yejin Kim", 17 });
+	//students.push_back({ "Kim HyeYoung", 22 });
 
-	cout << students << endl;
+	//cout << students << endl;
 
-	cout << endl << "find" << endl;
+	//cout << endl << "find" << endl;
 
-	//원하는 객체 지우기
-	//1. find -> erase
-	/*
-	auto pos = find_if(students.begin(), students.end(), 
-		[](Student& student) {return student.getName() == "Kim HyeYoung"; }
-	);
-	if (pos != students.end()) 
-	{
-		students.erase(pos);
-	}
-	
-	cout << students << endl;
-	*/
-	//2. erase - remove idiom
-	/*
-	students.erase(
-		remove_if(
-			students.begin(),
-			students.end(),
-			[](auto& student)
-			{ return student.equalName("Bae, Byungcheol"); }
-		),
-		students.end()
-	);
+	////원하는 객체 지우기
+	////1. find -> erase
+	///*
+	//auto pos = find_if(students.begin(), students.end(),
+	//	[](Student& student) {return student.getName() == "Kim HyeYoung"; }
+	//);
+	//if (pos != students.end())
+	//{
+	//	students.erase(pos);
+	//}
 
-	cout << students << endl;
-	*/
+	//cout << students << endl;
+	//*/
+	////2. erase - remove idiom
+	///*
+	//students.erase(
+	//	remove_if(
+	//		students.begin(),
+	//		students.end(),
+	//		[](auto& student)
+	//		{ return student.equalName("Bae, Byungcheol"); }
+	//	),
+	//	students.end()
+	//);
 
-	sort(students.begin(), students.end(),
-		[](auto& a, auto b){return a.getName() > b.getName(); });
+	//cout << students << endl;
+	//*/
 
-	cout << students << endl;
+	//sort(students.begin(), students.end(),
+	//	[](auto& a, auto b) {return a.getName() > b.getName(); });
 
-	return 0;
+	//cout << students << endl;
+
+	//return 0;
 
 	Screen screen(30, 81);
 	InputSystem input;
 
-	GameObject::Initialize(screen, input);
+
+	//유니티의 GameObject obj == C++의 GameObject * obj 임
+	vector<GameObject*> objs;
+
+	objs.reserve(10); //공간 만들어주는 함수
+	
+	objs.push_back(new Player("\xB2\xB2\xB2\xB2 \xB2\xB2 \xB2", { 40, 10 }, screen, input, { 3, 3 }));
+	objs.push_back(new Enemy("\xB0\xB0", { 10, 5 }, screen, input, { 2, 1 }));
+	objs.push_back(new Enemy("\xB0\xB0", { 5, 7 }, screen, input, { 2, 1 }));
+
+
 
 	while (true)
 	{
 		screen.clear();
 		input.readEveryFrame();
 
-		GameObject::Update();
-		GameObject::DestoryDisabledObjects();
-		GameObject::Draw();
-		
+		for (auto& obj : objs)
+		{
+			obj->update();
+		}
+		for (auto& obj : objs)
+		{
+			obj->draw();
+		}
+
 		screen.render();
 	}
 
 	GameObject::Deinitialize();
 
-	
+
 	return 0;
 }
