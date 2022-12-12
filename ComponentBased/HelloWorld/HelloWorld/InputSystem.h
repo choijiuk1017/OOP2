@@ -1,0 +1,295 @@
+#pragma once
+#include <conio.h>
+#include "Utils.h"
+#include <fstream>
+
+using namespace std;
+
+enum class KeyState
+{
+	Idle,
+	Pressed,
+	Stay,
+	Released,
+	PressedReleased
+};
+
+typedef KeyState MouseState;
+
+class InputSystem
+{
+	KeyState keys[256];
+	HANDLE hStdin;
+	DWORD fdwSaveOldMode;
+	INPUT_RECORD irInBuf[128];
+
+	MouseState mouse[3];
+
+	COORD mousePosition;
+	
+	ofstream log;
+
+	VOID ErrorExit(LPCSTR lpszMessage)
+	{
+		fprintf(stderr, "%s\n", lpszMessage);
+
+		// Restore input mode on exit.
+
+		SetConsoleMode(hStdin, fdwSaveOldMode);
+
+		ExitProcess(0);
+	}
+
+	VOID KeyEventProc(KEY_EVENT_RECORD ker)
+	{
+		Borland::printf("KEYBD: ");
+		log << endl << "MOUSE: " << GetTickCount64() << " ";
+
+		switch (keys[ker.wVirtualKeyCode & 0x00ff])
+		{
+		case KeyState::Idle:
+			if (ker.bKeyDown == TRUE)
+				keys[ker.wVirtualKeyCode] = KeyState::Pressed;
+			break;
+		case KeyState::Pressed:
+			if (ker.bKeyDown == FALSE)
+				keys[ker.wVirtualKeyCode] = KeyState::PressedReleased;
+			else 
+				keys[ker.wVirtualKeyCode] = KeyState::Stay;
+			break;
+		case KeyState::Stay:
+			if (ker.bKeyDown == FALSE)
+				keys[ker.wVirtualKeyCode] = KeyState::Released;
+			break;
+		case KeyState::Released: 
+		case KeyState::PressedReleased:
+			keys[ker.wVirtualKeyCode] = KeyState::Idle;
+			break;
+		}
+	}
+
+	VOID MouseEventProc(MOUSE_EVENT_RECORD mer)
+	{
+#ifndef MOUSE_HWHEELED
+#define MOUSE_HWHEELED 0x0008
+#endif
+		Borland::printf("MOUSE: ");
+		log << endl << "MOUSE: " << GetTickCount64() << " ";
+		int mouseNo = -1;
+
+		switch (mer.dwEventFlags)
+		{
+		case 0:
+
+			if (mer.dwButtonState == (FROM_LEFT_1ST_BUTTON_PRESSED | RIGHTMOST_BUTTON_PRESSED)
+				|| mer.dwButtonState == FROM_LEFT_2ND_BUTTON_PRESSED) {
+				mouseNo = 2;
+			}
+			else if (mer.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
+				mouseNo = 0;
+			}
+			else if (mer.dwButtonState == RIGHTMOST_BUTTON_PRESSED) {
+				mouseNo = 1;
+			}
+			
+			if (mouseNo == -1) {
+				log << " other button pressed ";
+				for (int i = 0; i < 3; i++)
+				{
+					switch (mouse[i]) {
+					case MouseState::Stay:
+						mouse[i] = MouseState::Released;
+						mousePosition = mer.dwMousePosition;
+
+						log << i << " [stay -> released]";
+						break;
+					}
+				}
+				break; /* return immediately */
+			}
+			
+			
+			log << mouseNo << " button pressed ";
+			switch (mouse[mouseNo]) {
+			case MouseState::Idle:
+				if (mouseNo != 2 && (mouse[2] == MouseState::Pressed || mouse[2] == MouseState::Stay))
+					break;
+				mouse[mouseNo] = MouseState::Pressed;
+				mousePosition = mer.dwMousePosition;
+				log << mouseNo << " [idle -> pressed]";
+				if (mouseNo == 2 && mouse[0] == MouseState::Pressed) {
+					mouse[0] = MouseState::Idle;
+					log << " 0 button state cancelled";
+				}
+				if (mouseNo == 2 && mouse[1] == MouseState::Pressed) {
+					mouse[1] = MouseState::Idle;
+					log << " 1 button state cancelled";
+				}
+				break;
+			case MouseState::Pressed:
+				if (mouseNo != 2 && (mouse[2] == MouseState::Pressed || mouse[2] == MouseState::Stay)) {
+					mouse[mouseNo] = MouseState::Idle;
+					log << mouseNo << " button state cancelled";
+					break;
+				}
+				mouse[mouseNo] = MouseState::Stay;
+				mousePosition = mer.dwMousePosition;
+				log << mouseNo << " [pressed -> stayed]";
+				break;
+			}
+			break;
+		case DOUBLE_CLICK:
+			Borland::printf("double click\n");
+			break;
+		case MOUSE_HWHEELED:
+			Borland::printf("horizontal mouse wheel\n");
+			break;
+		case MOUSE_MOVED:
+			mousePosition = mer.dwMousePosition;
+			Borland::printf("mouse moved\n");
+			break;
+		case MOUSE_WHEELED:
+			Borland::printf("vertical mouse wheel\n");
+			break;
+		default:
+			Borland::printf("unknown\n");
+			break;
+		}
+	}
+
+public:
+	InputSystem() : log("event.txt") {
+		DWORD fdwMode;
+
+		for (int i = 0; i < 256; i++)
+			keys[i] = KeyState::Idle;
+
+		mouse[0] = MouseState::Idle;
+		mouse[1] = MouseState::Idle;
+		mousePosition = { 0, 0 };
+
+		memset(irInBuf, 0, sizeof(INPUT_RECORD) * 128);
+
+		// Get the standard input handle.
+
+		hStdin = GetStdHandle(STD_INPUT_HANDLE);
+		if (hStdin == INVALID_HANDLE_VALUE)
+			ErrorExit("GetStdHandle");
+
+		// Save the current input mode, to be restored on exit.
+
+		if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
+			ErrorExit("GetConsoleMode");
+
+		// Enable the window and mouse input events.
+
+		fdwMode = (ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT) & ~ENABLE_QUICK_EDIT_MODE;
+		if (!SetConsoleMode(hStdin, fdwMode))
+			ErrorExit("SetConsoleMode");
+	}
+
+
+	virtual ~InputSystem() {
+		SetConsoleMode(hStdin, fdwSaveOldMode);
+		log.close();
+	}
+
+	void readEveryFrame() {
+		DWORD cNumRead = 0;
+
+		if (GetNumberOfConsoleInputEvents(hStdin, &cNumRead) == 0)
+		{
+			Borland::printf("Input Reading Failure %d\n", GetLastError() );
+			return;
+		}
+
+		for (int i = 0; i < 256; i++) {
+			switch (keys[i]) {
+			case KeyState::Released: 
+			case KeyState::PressedReleased:
+				keys[i] = KeyState::Idle; 
+				break;
+			case KeyState::Pressed:
+				keys[i] = KeyState::Stay; 
+				break;
+			}
+		}
+		for (int i = 0; i < 3; i++) {
+			switch (mouse[i]) {
+			case MouseState::Released:
+				log << endl << "FRAME: " << GetTickCount64() << " " << i << " button [released -> idle]";
+				mouse[i] = MouseState::Idle;
+				break;
+			case MouseState::Pressed:
+				mouse[i] = MouseState::Stay;
+				log << endl << "FRAME: " << GetTickCount64() << " " << i << " button [pressed -> stay]";
+				break;
+			}
+		}
+
+		if (cNumRead == 0) {
+			return;
+		}
+	
+		if (!ReadConsoleInput(
+			hStdin,      // input buffer handle
+			irInBuf,     // buffer to read into
+			128,         // size of read buffer
+			&cNumRead)) // number of records read
+			ErrorExit("ReadConsoleInput");
+		
+		for (int i = 0; i < (int)cNumRead; i++)
+		{
+			switch (irInBuf[i].EventType)
+			{
+			case KEY_EVENT: // keyboard input
+				KeyEventProc(irInBuf[i].Event.KeyEvent);
+				break;
+
+			case MOUSE_EVENT: // mouse input
+				MouseEventProc(irInBuf[i].Event.MouseEvent);
+				break;
+			}
+		}
+	}
+
+	auto getKeyDown(WORD keyCode) const
+	{
+		return keys[keyCode & 0x00ff] == KeyState::Pressed 
+			|| keys[keyCode & 0x00ff] == KeyState::PressedReleased;
+	}
+
+	auto getKey(WORD keyCode) const
+	{
+		return keys[keyCode & 0x00ff] == KeyState::Stay 
+			|| keys[keyCode & 0x00ff] == KeyState::PressedReleased;
+	}
+	
+	auto getKeyUp(WORD keyCode) const
+	{
+		return keys[keyCode & 0x00ff] == KeyState::Released 
+			|| keys[keyCode & 0x00ff] == KeyState::PressedReleased;
+	}
+
+	auto getMouseButton(int button) const
+	{
+		return mouse[button] == MouseState::Pressed 
+			|| mouse[button] == MouseState::Stay 
+			|| mouse[button] == MouseState::Released;
+	}
+	auto getMouseButtonDown(int button) const
+	{
+		return mouse[button] == MouseState::Pressed;
+	}
+	auto getMouseButtonUp(int button) const
+	{
+		return mouse[button] == MouseState::Released;
+	}
+
+	Position<int> getMousePosition() const 
+	{
+		return Position<int>{ (int)mousePosition.X, (int)mousePosition.Y };
+	}
+
+};
+
