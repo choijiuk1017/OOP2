@@ -3,54 +3,37 @@
 #include "GameObject.h"
 
 class Enemy;
+class MoveScript;
 
 class Player :
     public GameObject
 {
-	GameObject* target;
-	Position<float> targetPos;
+	MoveScript* moveScript;
 
-	void processInput();
-
-	void move()
+	auto processInput()
 	{
 		auto pos = getPos();
-		if (!target) {
-			if (targetPos == Position<float>::InvalidPosition) 
-				return;
+		if (input.getKey(0x57)) {
+			pos.y--;
 		}
-		else {
-			targetPos = target->getPos();
+		if (input.getKey(0x41)) {
+			pos.x--;
 		}
-		if ( targetPos == pos) {
-			if (target) {
-				target->setEnabled(false);
-				target = nullptr;
-			}
-			setPos(Position<int>(targetPos));
-			targetPos = Position<float>::InvalidPosition;
-			return;
+		if (input.getKey(0x53)) {
+			pos.y++;
 		}
-		setPos(pos.moveForward(targetPos, 1.f));
+		if (input.getKey(0x44)) {
+			pos.x++;
+		}
+		setPos(pos);
 	}
 
 	GameObject* findNearestTarget();
 
-
 public:
-	Player(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, Dimension dim = { 1,1 });
-	Player(const Player& other) : Player(other.getShape(), other.getPos(), other.screen, other.input, other.getDimension())
-	{
-		cout << "player copy constructor[" << this << "]:" << getPos() << endl;
-	}
+	Player(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, const Dimension& dim = { 1,1 });
+
+	void start() override;
 	void update() override;
-
-	void draw() override
-	{	
-		GameObject::draw();
-	}
-
-	void setTarget(GameObject* target) { this->target = target; }
-	
 };
 

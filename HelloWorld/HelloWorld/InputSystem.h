@@ -42,8 +42,7 @@ class InputSystem
 
 	VOID KeyEventProc(KEY_EVENT_RECORD ker)
 	{
-		Borland::GotoXY(0, 30);
-		printf("KEYBD: ");
+		Borland::printf("KEYBD: ");
 		log << endl << "MOUSE: " << GetTickCount64() << " ";
 
 		switch (keys[ker.wVirtualKeyCode & 0x00ff])
@@ -74,8 +73,7 @@ class InputSystem
 #ifndef MOUSE_HWHEELED
 #define MOUSE_HWHEELED 0x0008
 #endif
-		Borland::GotoXY(0, 30);
-		printf("MOUSE: ");
+		Borland::printf("MOUSE: ");
 		log << endl << "MOUSE: " << GetTickCount64() << " ";
 		int mouseNo = -1;
 
@@ -141,20 +139,20 @@ class InputSystem
 			}
 			break;
 		case DOUBLE_CLICK:
-			printf("double click\n");
+			Borland::printf("double click\n");
 			break;
 		case MOUSE_HWHEELED:
-			printf("horizontal mouse wheel\n");
+			Borland::printf("horizontal mouse wheel\n");
 			break;
 		case MOUSE_MOVED:
 			mousePosition = mer.dwMousePosition;
-			printf("mouse moved\n");
+			Borland::printf("mouse moved\n");
 			break;
 		case MOUSE_WHEELED:
-			printf("vertical mouse wheel\n");
+			Borland::printf("vertical mouse wheel\n");
 			break;
 		default:
-			printf("unknown\n");
+			Borland::printf("unknown\n");
 			break;
 		}
 	}
@@ -199,10 +197,9 @@ public:
 	void readEveryFrame() {
 		DWORD cNumRead = 0;
 
-		Borland::GotoXY(0, 25);
 		if (GetNumberOfConsoleInputEvents(hStdin, &cNumRead) == 0)
 		{
-			printf("Input Reading Failure %d\n", GetLastError() );
+			Borland::printf("Input Reading Failure %d\n", GetLastError() );
 			return;
 		}
 

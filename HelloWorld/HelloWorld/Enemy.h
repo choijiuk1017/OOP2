@@ -28,30 +28,30 @@ class Enemy :
         else if (input.getKey(VK_DOWN)) { // down arrow
             pos.y++;
         }
-        else {
-            walkRandomly();
-            return;
-        }
         setPos(pos);
+
+        if (input.getMouseButtonDown(0)) {
+            auto mousePos = input.getMousePosition();
+            Borland::printf("mouse position [%03d, %03d]\n", mousePos.x, mousePos.y);
+        }
     }
 
 public:
-    Enemy(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, const Dimension& dim = {1,1} )
-        : GameObject(shape, pos, screen, input, dim) 
-    {}
+    Enemy(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, const Dimension& dim = { 1,1 });
 
     ~Enemy() {
-        Borland::GotoXY(0, 35);
-        std::cout << "Enemy " << this << " destructed";
+        Borland::printf("Enemy %p destructed", this);
     }
 
     void update() override {
+        //walkRandomly();
         processInput();
     }
 
     void draw() override
     {
         GameObject::draw();
+        //screen.draw(getPos() + Position{ 0, -1 }, 'E');
     }
 };
 

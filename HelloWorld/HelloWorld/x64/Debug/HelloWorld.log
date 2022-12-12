@@ -1,2 +1,10 @@
 ﻿  main.cpp
-  HelloWorld.vcxproj -> C:\Users\B409_30\Downloads\ObjectInstantiation_Destruction (1)\MidtermPartialAnswers\HelloWorld\x64\Debug\HelloWorld.exe
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\Vector2.h(95,20): error C2228: '.sqrMagnitude' 왼쪽에는 클래스/구조체/공용 구조체가 있어야 합니다.
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\Vector2.h(95,20): message : 'const Vector2<int> *' 형식입니다.
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\Vector2.h(95,20): message : 대신 '->'을(를) 사용하려고 했습니까?
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\Vector2.h(94): message : 클래스 템플릿 멤버 함수 'auto Vector2<int>::sqrMagnitude(void) const'을(를) 컴파일하는 중입니다.
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\main.cpp(18): message : 컴파일되는 클래스 템플릿 인스턴스화 'Vector2<int>'에 대한 참조를 확인하세요.
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\main.cpp(82,40): error C2440: '초기화 중': 'void'에서 'double'(으)로 변환할 수 없습니다.
+C:\Users\B409_30\Downloads\ComponentBased\HelloWorld\HelloWorld\main.cpp(82,19): message : void 형식의 식을 다른 형식으로 변환할 수 없습니다.
+  Vector2.cpp
+  코드를 생성하고 있습니다...

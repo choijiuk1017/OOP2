@@ -29,7 +29,7 @@ public:
 		std::system(mode.c_str());
 		std::system("chcp 437");
 
-		Borland::Initialize();
+		Borland::Initialize(n_cols + n_extra_cols);
 		clear();
 	}
 

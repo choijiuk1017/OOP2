@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include "Screen.h"
 #include "InputSystem.h"
+#include "Component.h"
 
 using namespace std;
 
@@ -21,44 +22,53 @@ protected:
 	InputSystem& input;
 	Screen& screen;
 
-	static vector<GameObject*> objs;
-	static vector<GameObject*> pendingObjs;
+	vector<unique_ptr<Component>> components;
+
+	template<class T>
+	void addComponent(T* comp)
+	{
+		auto it = find_if(components.cbegin(), components.cend(), [](auto& item) {
+			Component* obj = item.get();
+			return dynamic_cast<T*>(obj) != nullptr;
+		});
+		if (it == components.cend()) components.push_back(move(unique_ptr<T>(comp)));
+	}
+
+	template<class T>
+	T* getComponent()
+	{
+		auto it = find_if(components.begin(), components.end(), [](auto& item) {
+			Component* obj = item.get();
+			return dynamic_cast<T*>(obj) != nullptr;
+		});
+		if (it == components.end()) return nullptr;
+		return it->get();
+	}
+
+	static vector<unique_ptr<GameObject>> objs;	
+	static vector<GameObject *> pendings;
+
+
+	friend Component;
+
+	void innerUpdate();
+
 	
 	
 public:
-	GameObject(const char* shape, const Position<int>& pos, Screen & screen, InputSystem& input, Dimension dim = { 1, 1 } )
-		: pos(Position<float>{(float)pos.x, (float)pos.y}), shape(nullptr), dim(dim), screen(screen), input(input), enabled(true)
-	{
-		cout << "game object constructor[" << this << "]:"<< pos << endl;
-
-		this->shape = new char[dim.size() + 1];
-		size_t len = strlen(shape) ;
-		if (len > dim.size()) len = dim.size();
-		strncpy(this->shape, shape, len);
-		this->shape[len] = 0;
-		//pendingObjs.push_back(this); 코드를 읽는 사람이 더욱 편한게 좋음
-	}
-
-	GameObject(const GameObject& other) : GameObject(other.shape, other.pos, other.screen, other.input, other.dim)
-	{
-		cout << "game object copy constructor[" << this << "]:" << pos << endl;
-	}
+	GameObject(const char* shape, const Position<int>& pos, Screen& screen, InputSystem& input, const Dimension& dim = { 1, 1 });
 
 	virtual ~GameObject() {
-		cout << "game object destructor: " << this << endl;
 		delete[] shape; 
 		shape = nullptr; 
 	}
 
 	auto isEnabled() const { return enabled; }
-	auto setEnabled(bool enabled) { this->enabled = enabled; }
+	auto setEnabled(bool enabled) { this->enabled = enabled; if (enabled == true) start(); }
 
 	auto getPos() const { return pos; }
 
-	void setPos(const Position<float>& pos)
-	{
-		this->pos = pos;
-	}
+	void setPos(const Position<float>& pos) { this->pos = pos; }
 
 	auto getDimension() const { return dim; }
 
@@ -66,12 +76,13 @@ public:
 		
 	const auto getShape() const { return shape; }
 
-	virtual void draw()
-	{
-		screen.draw(Position<int>{(int)pos.x, (int)pos.y}, shape, dim);
-	}
+	virtual void draw() { screen.draw(Position<int>{(int)pos.x, (int)pos.y}, shape, dim); }
 
-	virtual void update() {}	
+	virtual void start() {}
+
+	virtual void update() {}
+
+	const Screen& getScreen() { return screen; }
 	
 	static void Initialize(Screen& screen, InputSystem& input);
 
