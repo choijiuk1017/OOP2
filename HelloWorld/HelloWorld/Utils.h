@@ -67,7 +67,7 @@ struct Position {
 		pos = pos + dirUnit * speed;
 		return pos;
 	}
-
+	
 	bool operator==(const Position& other);
 
 	auto operator!=(const Position& other) 
@@ -130,6 +130,8 @@ public:
 	{
 		GotoXY( pos.x, pos.y);
 	}
+
+	//가변 인자 함수
 	static void printf(const char* fmt, ...)
 	{
 		static char cleaningBuffer[100+1];
@@ -139,6 +141,7 @@ public:
 		cleaningBuffer[100] = NULL;
 		::printf("%s\r[%7d] ", cleaningBuffer,  CurrentPos.y);
 
+		//가변 인자
 		va_list args;
 		va_start(args, fmt);
 		vprintf(fmt, args);

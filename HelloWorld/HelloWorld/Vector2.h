@@ -19,8 +19,13 @@ public:
 
 	~Vector2(){}
 
+	T X() const { return x; }
+	T Y() const { return y; }
+
 	template<typename U>
-	Vector2(const Vector2<U>& other) :x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {}
+	Vector2(const Vector2<U>& other)
+		: Vector2{ static_cast<T>(other.X()), static_cast<T>(other.Y()) }
+	{}
 
 
 	void set(T x, T y)
@@ -28,7 +33,6 @@ public:
 		this->x = x;
 		this->y = y;
 	}
-
 
 	//연산자 오퍼레이터
 	//새로운 정보 생성
@@ -85,13 +89,11 @@ public:
 
 	void reset() { set(0, 0); }
 
-	double magnitude() const
-	{
+	auto sqrMagnitude() const {
 		return this->x * this->x + this->y * this->y;
 	}
 
-	auto sqrMagnitude() const
-	{
+	auto magnitude() const {
 		return sqrt(this->sqrMagnitude());
 	}
 
