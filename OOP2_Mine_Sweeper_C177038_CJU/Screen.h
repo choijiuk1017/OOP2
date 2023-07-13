@@ -12,8 +12,6 @@ class Screen
 	int n_rows;
 	int n_cols;
 
-
-
 	int pos2offset(int x, int y, int n_cols)
 	{
 		return y * n_cols + x;

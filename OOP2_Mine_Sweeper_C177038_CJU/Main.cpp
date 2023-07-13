@@ -60,9 +60,9 @@ int main()
 		screen.rendScreen();
 
 		input.readEveryFrame();
-		//screen.renderTable(); //확인용
+		screen.renderTable(); //확인용
 
-		player.printInformation();
+		//player.printInformation();
 	}
 
 	//동적 생성한 enemy들을 NULL로 변환

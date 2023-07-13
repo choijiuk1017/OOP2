@@ -27,10 +27,16 @@ public:
 	virtual void Clear() {}
 	virtual void Draw() {}
 
-	void Render()
+	virtual void Render()
 	{
 		Borland::GotoXY(0, 0);
 		printf("%s", table);
+	}
+
+	auto checkValidPos(const Position& pos) const
+	{
+		return (pos.x >= 0 && pos.x < cols - 1
+			&& pos.y >= 0 && pos.y < rows);
 	}
 
 	~ScreenTable() { delete[] table; }
