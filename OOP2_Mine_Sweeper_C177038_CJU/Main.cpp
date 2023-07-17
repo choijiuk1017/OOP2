@@ -3,7 +3,8 @@
 #include <time.h>
 #include "GameObject.h"
 #include "Utils.h"
-#include "Screen.h"
+#include "MainTable.h"
+#include "numTable.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -15,11 +16,13 @@ int main()
 
 	static int randomNum = 10 + rand() % 11; //지뢰의 수 10이상 20 이하
 
-	Screen screen;
+	NumTable numTable{10, 11};
+
+	MainTable mainTable{ 10, 11, numTable};
 
 	InputSystem input;
 
-	Player player{ 0, 0 ,screen, input};
+	Player player{ 0, 0 ,mainTable, numTable, input};
 
 	Enemy* enemy[20] = {}; //생성될 수 있는 지뢰가 최대 20개이기 때문에 20개 크기의 배열 사용
 
@@ -42,25 +45,25 @@ int main()
 	//지뢰 숫자만큼 생성
 	for (int i = 0; i < randomNum; i++)
 	{
-		screen.drawTable(enemy[i]->getPos(), enemy[i]->getShape()); //table에 지뢰 생성
+		numTable.Draw(enemy[i]->getPos(), enemy[i]->getShape()); //table에 지뢰 생성
 
-		screen.setTable(enemy[i]->getPos()); //지뢰 근처 숫자 생성
+		numTable.SetTable(enemy[i]->getPos()); //지뢰 근처 숫자 생성
 	}
 
 	//게임 루프
 	while (1)
 	{
 
-		screen.lines2Screen(); //lines의 정보를 계속해서 screen으로 복사
+		mainTable.Hide2Main(); //lines의 정보를 계속해서 screen으로 복사
 
 		player.draw();
 
 		player.update(randomNum);
 
-		screen.rendScreen();
+		mainTable.Render();
 
 		input.readEveryFrame();
-		screen.renderTable(); //확인용
+		//screen.renderTable(); //확인용
 
 		//player.printInformation();
 	}

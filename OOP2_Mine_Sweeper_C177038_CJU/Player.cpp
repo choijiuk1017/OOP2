@@ -4,29 +4,29 @@ void Player::check(const Position& pos)
 {
 	Borland::GotoXY(0, 13);
 
-	char mineNum = screen.table2Lines(pos);
+	char mineNum = numTable.CheckPos(pos);
 
 	if (mineNum >= '*' && mineNum <= '/')
 	{
 		mineNum = '*';
-		screen.draw(pos, mineNum);
+		mainTable.Draw(pos, mineNum);
 		printf("Mine!");
 		exit(0);
 	}
 
 	if (mineNum == '0')
 	{
-		screen.checkAround(pos.x, pos.y);
+		mainTable.CheckAround(pos.x, pos.y);
 	}
 
-	screen.draw(pos, mineNum);
+	mainTable.Draw(pos, mineNum);
 }
 
 void Player::drawFlag(int& Num, const Position& pos)
 {
 	Borland::GotoXY(0, 14);
 
-	screen.draw(pos, 'F');
+	mainTable.Draw(pos, 'F');
 
 	static int mineNum = Num;
 	static int flagNum = Num;
@@ -35,10 +35,10 @@ void Player::drawFlag(int& Num, const Position& pos)
 
 	printf("flag: %d\n", flagNum);
 
-	if (screen.table2Lines(pos) == '*')
+	if (numTable.CheckPos(pos) == '*')
 	{
 		mineNum--;
-		screen.checkFlag(pos);
+		numTable.CheckFlag(pos);
 		printf("mine: %d\n", mineNum);
 	}
 

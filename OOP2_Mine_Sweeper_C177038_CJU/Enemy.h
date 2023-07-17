@@ -8,7 +8,7 @@ class Enemy : public GameObject
     static int randomNum;
 
 public:
-    Enemy(int x = rand() % 10, int y = rand() % 10) : GameObject('*', x, y, screen, input)
+    Enemy(int x = rand() % 10, int y = rand() % 10) : GameObject('*', x, y, mainTable, numTable, input)
     {
         posX = x;
         posY = y;

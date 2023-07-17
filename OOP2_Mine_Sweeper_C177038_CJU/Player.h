@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include <conio.h>
-#include "Screen.h"
+#include "MainTable.h"
 
 
 class Player : public GameObject
@@ -52,8 +52,8 @@ class Player : public GameObject
 
 
 public:
-	Player(int x, int y, Screen& screen, InputSystem& input)
-		: GameObject('>', x, y, screen, input) 
+	Player(int x, int y, MainTable& mainTable, NumTable& numTable, InputSystem& input)
+		: GameObject('>', x, y, mainTable, numTable, input) 
 	{}
 
 	void update(int mineNum) override

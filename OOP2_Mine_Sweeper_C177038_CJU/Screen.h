@@ -160,8 +160,7 @@ public:
 			}
 		}
 
-		checkLeft(x, y);
-		checkRight(x, y);
+
 	}
 	//¾Æ·¡ÂÊ Å½»ç
 	void checkBottom(int x, int y)
@@ -214,8 +213,6 @@ public:
 			}
 		}
 
-		checkLeft(x, y);
-		checkRight(x, y);
 	}
 
 	//¿ÞÂÊ Å½»ç
