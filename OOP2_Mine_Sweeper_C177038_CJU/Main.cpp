@@ -60,7 +60,7 @@ int main()
 
 		player.update(randomNum);
 
-		mainTable.Render();
+		mainTable.RenderMain();
 
 		input.readEveryFrame();
 		//screen.renderTable(); //확인용

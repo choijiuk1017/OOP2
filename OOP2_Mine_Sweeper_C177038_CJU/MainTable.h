@@ -58,6 +58,12 @@ public:
 	virtual void Render()
 	{
 		Borland::GotoXY(0, 0);
+		printf("%s", hideTable);
+	}
+
+	void RenderMain()
+	{
+		Borland::GotoXY(0, 0);
 		printf("%s", mainTable);
 	}
 
@@ -65,54 +71,24 @@ public:
 	{
 		int offset = pos2offset(x, y, cols);
 
-		if (numTable.numTable[offset] != '\n' && numTable.numTable[offset] != '\0')
+		if (numTable.CheckPos(x, y) == '\0' || numTable.CheckPos(x, y) == '\n' || numTable.CheckPos(x, y) != '0')
 		{
 			return;
 		}
 
-		if (numTable.numTable[offset - 12] == '0')
-		{
-			hideTable[offset - 12] = numTable.numTable[offset - 12];
-			CheckAround(x - 1, y + 1);
-		}
-		if (numTable.numTable[offset - 11] == '0')
-		{
-			hideTable[offset - 11] = numTable.numTable[offset - 11];
-			CheckAround(x, y + 1);
-		}
-		if (numTable.numTable[offset - 10] == '0')
-		{
-			hideTable[offset - 10] = numTable.numTable[offset - 10];
-			CheckAround(x + 1, y + 1);
-		}
-		if (numTable.numTable[offset - 1] == '0')
-		{
-			hideTable[offset - 1] = numTable.numTable[offset - 12];
-			CheckAround(x - 1, y);
-		}
-		if (numTable.numTable[offset + 1] == '0')
-		{
-			hideTable[offset + 1] = numTable.numTable[offset + 1];
-			CheckAround(x + 1, y);
-		}
-		if (numTable.numTable[offset + 10] == '0')
-		{
-			hideTable[offset + 10] = numTable.numTable[offset + 10];
-			CheckAround(x - 1, y - 1);
-		}
-		if (numTable.numTable[offset + 11] == '0')
-		{
-			hideTable[offset + 11] = numTable.numTable[offset + 11];
-			CheckAround(x, y - 1);
+		hideTable[offset] = '0';
 
-		}
-		if (numTable.numTable[offset + 12] == '0')
-		{
-			hideTable[offset + 12] = numTable.numTable[offset + 12];
-			CheckAround(x + 1, y - 1);
-		}
-
+		//CheckAround(x - 1, y - 1);
+		CheckAround(x - 1, y);
+		//CheckAround(x - 1, y + 1);
+		CheckAround(x, y - 1);
+		CheckAround(x, y + 1);
+		//CheckAround(x + 1, y - 1);
+		CheckAround(x + 1, y);
+		//CheckAround(x + 1, y + 1);
 	}
+		
+	
 
 	
 

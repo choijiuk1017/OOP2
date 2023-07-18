@@ -17,6 +17,10 @@ struct Position {
 	{
 		return Position{ this->x + other.x, this->y + other.y };
 	}
+	auto operator-(const Position& other)
+	{
+		return Position{ this->x - other.x, this->y - other.y };
+	}
 };
 
 typedef Position Dimension;

@@ -4,7 +4,7 @@ void Player::check(const Position& pos)
 {
 	Borland::GotoXY(0, 13);
 
-	char mineNum = numTable.CheckPos(pos);
+	char mineNum = numTable.CheckPos(pos.x, pos.y);
 
 	if (mineNum >= '*' && mineNum <= '/')
 	{
@@ -35,7 +35,7 @@ void Player::drawFlag(int& Num, const Position& pos)
 
 	printf("flag: %d\n", flagNum);
 
-	if (numTable.CheckPos(pos) == '*')
+	if (numTable.CheckPos(pos.x ,pos.y) == '*')
 	{
 		mineNum--;
 		numTable.CheckFlag(pos);

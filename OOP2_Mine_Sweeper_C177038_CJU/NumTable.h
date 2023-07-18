@@ -39,9 +39,9 @@ public:
 	}
 
 	//해당 위치의 정보 반환
-	char CheckPos(const Position& pos)
+	char CheckPos(int x, int y)
 	{
-		int offset = pos2offset(pos.x, pos.y, cols);
+		int offset = pos2offset(x, y, cols);
 
 		char shape = numTable[offset];
 
