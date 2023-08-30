@@ -27,11 +27,11 @@ void PrintData(const CMyData& rData)
 	cout << "PrintData(): " << rData.m_nData << endl;
 }
 
-
+/*
 int main()
 {
 	CMyData a(5);
 	PrintData(a);
 
 	return 0;
-}
+}*/
