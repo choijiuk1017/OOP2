@@ -4,6 +4,7 @@ using namespace std;
 
 class CNode
 {
+	//CMyList를 friend 클래스로 선언
 	friend class CMyList;
 private: 
 	char m_szName[32];
@@ -19,6 +20,7 @@ public:
 	}
 };
 
+//CNode 클래스와 friend 관계이므로 private 멤버에 접근 가능
 class CMyList
 {
 private:
@@ -56,7 +58,7 @@ public:
 	}
 };
 
-
+/*
 int main()
 {
 	CMyList list;
@@ -68,4 +70,4 @@ int main()
 	list.AddNewNode("영희");
 
 	return 0;
-}
+}*/

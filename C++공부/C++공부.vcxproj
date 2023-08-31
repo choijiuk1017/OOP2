@@ -127,7 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Aggregation.cpp" />
     <ClCompile Include="Casting.cpp" />
+    <ClCompile Include="Composition.cpp" />
     <ClCompile Include="FriendClass.cpp" />
     <ClCompile Include="FriendFunction.cpp" />
     <ClCompile Include="InheritOperOver.cpp" />
