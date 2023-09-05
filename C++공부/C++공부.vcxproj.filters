@@ -33,5 +33,11 @@
     <ClCompile Include="Aggregation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Template.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateArray.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

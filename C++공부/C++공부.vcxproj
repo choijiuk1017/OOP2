@@ -133,6 +133,8 @@
     <ClCompile Include="FriendClass.cpp" />
     <ClCompile Include="FriendFunction.cpp" />
     <ClCompile Include="InheritOperOver.cpp" />
+    <ClCompile Include="Template.cpp" />
+    <ClCompile Include="TemplateArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
