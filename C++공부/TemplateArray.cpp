@@ -39,6 +39,8 @@ public:
 		}
 
 		delete m_pData;
+
+		//r-value에 맞게 새로 생성
 		m_pData = new T[rhs.m_nSize];
 
 		memcpy(m_pData, rhs.m_pData, sizeof(T) * rhs.m_nSize);
@@ -74,6 +76,8 @@ public:
 
 			exit(1);
 		}
+
+		return m_pData[nIndex];
 	}
 
 	//상수화된 배열 연산자
@@ -87,10 +91,11 @@ public:
 
 };
 
-
+/*
 int main()
 {
 	//int 자료형 배열
+	//int 자료형 값 다섯 개가 저장 될 수 있는 메모리를 동적 할당, arr 인스턴스 생성
 	CMyArray<int> arr(5);
 
 	arr[0] = 10;
@@ -105,8 +110,10 @@ int main()
 	}
 	cout << endl;
 
+	//새로 CMyArray 클래스 템플릿의 인스턴스 생성, 요소의 개수 3
 	CMyArray<int> arr2(3);
 
+	//arr은 5개, arr2는 3개이나 새로 정의한 대입 연산자를 통해 r-value에 맞춰 추가 생성
 	arr2 = arr;
 
 	for (int i = 0; i < 5; i++)
@@ -117,4 +124,4 @@ int main()
 	cout << endl;
 
 	return 0;
-}
+}*/
