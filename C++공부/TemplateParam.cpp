@@ -1,3 +1,4 @@
+
 #include<iostream>
 
 using namespace std;
@@ -7,7 +8,8 @@ using namespace std;
 
 
 //템플릿 매개변수를 함수처럼 선언
-template <typename T, int nSize>
+//템플릿 매개변수는 클래스 템플릿 내부에서 모두 접근 가능
+template <typename T = int , int nSize = 3> //사용자 코드에서 따로 기술하지 않으면 디폴트 값으로 적용 가능
 class CMyArray
 {
 private:
@@ -41,6 +43,8 @@ public:
 	int GetSize() { return nSize; }
 
 };
+
+/*
 int main()
 {
 	CMyArray<int, 3> arr;
@@ -55,4 +59,4 @@ int main()
 	}
 
 	return 0;
-}
+}*/
