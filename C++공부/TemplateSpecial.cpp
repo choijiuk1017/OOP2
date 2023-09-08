@@ -36,6 +36,7 @@ public:
 
 };
 
+/*
 int main()
 {
 	CMyData<char*> a("Hello");
@@ -43,4 +44,4 @@ int main()
 	cout << a.GetData() << endl;
 
 	return 0;
-}
+}*/

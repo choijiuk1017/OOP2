@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Aggregation.cpp" />
+    <ClCompile Include="AutoPtrSample1.cpp" />
     <ClCompile Include="Casting.cpp" />
     <ClCompile Include="Composition.cpp" />
     <ClCompile Include="FriendClass.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Template.cpp" />
     <ClCompile Include="TemplateArray.cpp" />
     <ClCompile Include="TemplateFunction.cpp" />
+    <ClCompile Include="TemplateInherit.cpp" />
     <ClCompile Include="TemplateMember.cpp" />
     <ClCompile Include="TemplateParam.cpp" />
     <ClCompile Include="TemplateSpecial.cpp" />

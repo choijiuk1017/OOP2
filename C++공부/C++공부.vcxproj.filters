@@ -13,43 +13,64 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\InheritDeepen">
+      <UniqueIdentifier>{772f6fba-ff53-4ab2-a7c4-e844c5a66a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Template">
+      <UniqueIdentifier>{1221b40b-de40-45d1-acbe-932482f9a785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Friend">
+      <UniqueIdentifier>{85158aca-696c-426f-bce8-cc963d4560ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Relation">
+      <UniqueIdentifier>{3bb1493c-3b47-4a8d-8d23-487d57b6c820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\SmartPtr">
+      <UniqueIdentifier>{d9ac13f6-b7e6-4017-8014-23c0e4c9a27d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InheritOperOver.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="FriendFunction.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\InheritDeepen</Filter>
     </ClCompile>
     <ClCompile Include="Casting.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="FriendClass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Composition.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Aggregation.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\InheritDeepen</Filter>
     </ClCompile>
     <ClCompile Include="Template.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Template</Filter>
     </ClCompile>
     <ClCompile Include="TemplateArray.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TemplateMember.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TemplateParam.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Template</Filter>
     </ClCompile>
     <ClCompile Include="TemplateFunction.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateInherit.cpp">
+      <Filter>소스 파일\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateMember.cpp">
+      <Filter>소스 파일\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateParam.cpp">
+      <Filter>소스 파일\Template</Filter>
     </ClCompile>
     <ClCompile Include="TemplateSpecial.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="FriendClass.cpp">
+      <Filter>소스 파일\Friend</Filter>
+    </ClCompile>
+    <ClCompile Include="FriendFunction.cpp">
+      <Filter>소스 파일\Friend</Filter>
+    </ClCompile>
+    <ClCompile Include="Composition.cpp">
+      <Filter>소스 파일\Relation</Filter>
+    </ClCompile>
+    <ClCompile Include="Aggregation.cpp">
+      <Filter>소스 파일\Relation</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoPtrSample1.cpp">
+      <Filter>소스 파일\SmartPtr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
