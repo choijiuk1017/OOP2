@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Aggregation.cpp" />
     <ClCompile Include="AutoPtrSample1.cpp" />
+    <ClCompile Include="AutoPtrSample2.cpp" />
     <ClCompile Include="Casting.cpp" />
     <ClCompile Include="Composition.cpp" />
     <ClCompile Include="FriendClass.cpp" />
