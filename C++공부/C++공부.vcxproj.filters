@@ -75,5 +75,8 @@
     <ClCompile Include="AutoPtrSample2.cpp">
       <Filter>소스 파일\SmartPtr</Filter>
     </ClCompile>
+    <ClCompile Include="SharedPtrSample.cpp">
+      <Filter>소스 파일\SmartPtr</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

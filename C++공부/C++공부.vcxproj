@@ -135,6 +135,7 @@
     <ClCompile Include="FriendClass.cpp" />
     <ClCompile Include="FriendFunction.cpp" />
     <ClCompile Include="InheritOperOver.cpp" />
+    <ClCompile Include="SharedPtrSample.cpp" />
     <ClCompile Include="Template.cpp" />
     <ClCompile Include="TemplateArray.cpp" />
     <ClCompile Include="TemplateFunction.cpp" />
