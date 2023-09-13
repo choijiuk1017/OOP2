@@ -135,6 +135,7 @@
     <ClCompile Include="FriendClass.cpp" />
     <ClCompile Include="FriendFunction.cpp" />
     <ClCompile Include="InheritOperOver.cpp" />
+    <ClCompile Include="SharedPtrArray.cpp" />
     <ClCompile Include="SharedPtrSample.cpp" />
     <ClCompile Include="Template.cpp" />
     <ClCompile Include="TemplateArray.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="TemplateMember.cpp" />
     <ClCompile Include="TemplateParam.cpp" />
     <ClCompile Include="TemplateSpecial.cpp" />
+    <ClCompile Include="UniquePtrSample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
