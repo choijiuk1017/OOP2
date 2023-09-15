@@ -14,6 +14,7 @@ public:
 	void TestFunc() { cout << "TestFunc()" << endl; }
 };
 
+/*
 int main()
 {
 	unique_ptr<CTest> ptr1(new CTest);
@@ -26,3 +27,4 @@ int main()
 	return 0;
 }
 //shared_ptr과 unique_ptr을 적절히 섞어서 사용하는 것이 좋음
+*/

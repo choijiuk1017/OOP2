@@ -22,6 +22,7 @@ void RemoveTest(CTest* pTest)
 	delete[] pTest;
 }
 
+/*
 int main()
 {
 	cout << "*****Begin*****" << endl;
@@ -34,5 +35,5 @@ int main()
 
 	return 0;
 }
-
+*/
 //auto_ptr보다 shared_ptr을 사용하는 것이 바람직함

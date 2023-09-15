@@ -132,9 +132,11 @@
     <ClCompile Include="AutoPtrSample2.cpp" />
     <ClCompile Include="Casting.cpp" />
     <ClCompile Include="Composition.cpp" />
+    <ClCompile Include="ExceptSample.cpp" />
     <ClCompile Include="FriendClass.cpp" />
     <ClCompile Include="FriendFunction.cpp" />
     <ClCompile Include="InheritOperOver.cpp" />
+    <ClCompile Include="Multicatch.cpp" />
     <ClCompile Include="SharedPtrArray.cpp" />
     <ClCompile Include="SharedPtrSample.cpp" />
     <ClCompile Include="Template.cpp" />

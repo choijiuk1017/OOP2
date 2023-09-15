@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\SmartPtr">
       <UniqueIdentifier>{d9ac13f6-b7e6-4017-8014-23c0e4c9a27d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Except">
+      <UniqueIdentifier>{d0a1dc5e-7fac-4d18-b2cf-d8a4a218efb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InheritOperOver.cpp">
@@ -83,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="UniquePtrSample.cpp">
       <Filter>소스 파일\SmartPtr</Filter>
+    </ClCompile>
+    <ClCompile Include="ExceptSample.cpp">
+      <Filter>소스 파일\Except</Filter>
+    </ClCompile>
+    <ClCompile Include="Multicatch.cpp">
+      <Filter>소스 파일\Except</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
